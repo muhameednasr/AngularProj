@@ -1,0 +1,21 @@
+//models
+iMovie :
+iUser---> watchList
+iWatchList ------->{ imovie[{id}+++{id:2}] }
+
+
+
+
+//services
+
+  MoviesService -----------------------------
+
+  authService =======> authGuard
+
+  watchService -------> postToWatchList
+
+//components
+homePage
+favourite movies
+    recommended movies
+details page
