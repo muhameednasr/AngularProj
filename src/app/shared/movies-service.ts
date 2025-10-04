@@ -7,7 +7,8 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class MoviesService {
-  private baseURL = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
+  private apiKey = 'cdf737fb0a8771a79228a4d738740585';
+  private baseURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${this.apiKey}`;
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +17,9 @@ export class MoviesService {
   }
 
   getMovie(id: number): Observable<Imovie> {
-    return this.http.get<Imovie>(`https://api.themoviedb.org/3/movie/${id}?api_key=YOUR_API_KEY`);
+    return this.http.get<Imovie>(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey} `
+    );
   }
 
   // the following work only if using your own backend API

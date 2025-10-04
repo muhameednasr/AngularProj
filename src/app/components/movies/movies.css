@@ -1,57 +1,68 @@
 body {
   background-color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
 }
-.hero-section {
-  padding: 50px;
-  background-color: #f2f0f0;
-}
-.movie-card {
-  position: relative;
 
-  margin-bottom: 25px;
+.movie-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
 }
+
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
 .movie-image {
-  height: 300px;
+  height: 270px;
   object-fit: cover;
-  border-radius: 8px;
+  width: 100%;
 }
+
 .rating-badge {
   position: absolute;
-  bottom: 60px;
+  bottom: 80px;
   left: 10px;
-  background-color: #28a745;
-  color: white;
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-weight: bold;
+  background-color: #212529;
+  color: #fff;
   font-size: 0.85rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 8px;
 }
+
 .wishlist-icon {
   position: absolute;
   top: 10px;
   right: 10px;
-  color: white;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  color: #ffcc00;
 }
-.watchlist-nav-icon {
-  color: #212529;
-}
-.movie-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0;
-  color: #212529;
-}
-.movie-date {
-  font-size: 0.85rem;
-  color: #6c757d;
-}
+
 .movie-info {
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 5px;
 }
+
+.movie-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: #000;
+}
+
+.movie-date {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+
 .pagination-custom .page-link {
   border: none;
   color: #000;

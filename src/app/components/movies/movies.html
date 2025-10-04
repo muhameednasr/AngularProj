@@ -18,59 +18,33 @@
 
   <hr>
 
-  <section class="now-playing mt-5">
-    <h2 class="mb-4 fw-bold">Now Playing</h2>
+  <div class="container my-5">
+    <h4 class="fw-bold mb-4">Now Playing</h4>
 
-    <div class="row ">
-      <div class="row g-3">
-        @for (movie of movies$ | async; track movie.id) {
-        <div class="col-sm-6 col-md-4 col-lg-2">
-          <div class="movie-card position-relative shadow rounded overflow-hidden">
+    <div class="row g-4">
+      @for (movie of movies$ | async; track movie.id) {
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="movie-card shadow-sm rounded overflow-hidden position-relative">
 
-            <img [src]="imageBaseUrl + movie.backdrop_path" class="img-fluid movie-image" [alt]="movie.title" />
+          <img [src]="imageBaseUrl + movie.poster_path" class="movie-image w-100" [alt]="movie.title" />
 
-            <span class="rating-badge position-absolute top-0 start-0 m-2 bg-dark text-white px-2 rounded">
-              {{ movie.vote_average | number: '1.0-1' }}
-            </span>
 
-            <i class="bi bi-heart wishlist-icon position-absolute top-0 end-0 m-2 text-danger"></i>
+          <div class="rating-badge">
+            {{ movie.vote_average | number: '1.0-1' }}
+          </div>
 
-            <div class="movie-info p-2 d-flex justify-content-between align-items-center">
-              <div>
-                <p class="movie-title fw-bold m-0">{{ movie.title }}</p>
-                <p class="movie-date text-muted small m-0">{{ movie.release_date | date }}</p>
-              </div>
-              <i class="bi bi-star-fill text-warning"></i>
+
+          <i class="bi bi-heart-fill wishlist-icon"></i>
+
+          <div class="movie-info">
+            <div>
+              <p class="movie-title">{{ movie.title }}</p>
+              <p class="movie-date">{{ movie.release_date | date: 'MMM dd, yyyy' }}</p>
             </div>
+            <i class="bi bi-star-fill text-warning"></i>
           </div>
         </div>
-        }
       </div>
-
-
-      <section>
-        <div class="d-flex justify-content-center mt-5">
-          <nav>
-            <ul class="pagination pagination-custom">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&lt;</span>
-                </a>
-              </li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&gt;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
-
+      }
     </div>
+  </div>
