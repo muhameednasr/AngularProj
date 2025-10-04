@@ -76,3 +76,25 @@ body {
 .pagination-custom .page-link:hover {
   color: #000;
 }
+
+.rating-circle {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.rating-circle span {
+  position: relative;
+  z-index: 2;
+}
