@@ -1,0 +1,67 @@
+body {
+  background-color: #ffffff;
+}
+.hero-section {
+  padding: 50px;
+  background-color: #f2f0f0;
+}
+.movie-card {
+  position: relative;
+
+  margin-bottom: 25px;
+}
+.movie-image {
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.rating-badge {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+.wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-size: 1.2rem;
+}
+.watchlist-nav-icon {
+  color: #212529;
+}
+.movie-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: #212529;
+}
+.movie-date {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+.movie-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+}
+.pagination-custom .page-link {
+  border: none;
+  color: #000;
+}
+.pagination-custom .page-item.active .page-link {
+  background-color: #ffc107;
+  border-radius: 50%;
+  color: #212529;
+  font-weight: bold;
+}
+.pagination-custom .page-link:hover {
+  color: #000;
+}

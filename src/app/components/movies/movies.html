@@ -1,1 +1,76 @@
-<p>movies works!</p>
+<div class="container py-4">
+
+  <section class="hero-section ">
+    <h1 class="fw-bold">Welcome to our movie app</h1>
+    <p class="text-muted mb-4">Millions of movies, TV shows and people to discover. Explore now.</p>
+
+    <div class="row ">
+      <div class="col-12">
+        <div class="d-flex">
+          <input type="text" class="form-control form-control-lg me-2" placeholder="Search and explore..."
+            aria-label="Search" style="width: 100%;">
+          <button class="btn btn-lg fw-bold" type="button" style="  background-color: #f8d364;
+">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="now-playing mt-5">
+    <h2 class="mb-4 fw-bold">Now Playing</h2>
+
+    <div class="row ">
+      <div class="row g-3">
+        @for (movie of movies$ | async; track movie.id) {
+        <div class="col-sm-6 col-md-4 col-lg-2">
+          <div class="movie-card position-relative shadow rounded overflow-hidden">
+
+            <img [src]="imageBaseUrl + movie.backdrop_path" class="img-fluid movie-image" [alt]="movie.title" />
+
+            <span class="rating-badge position-absolute top-0 start-0 m-2 bg-dark text-white px-2 rounded">
+              {{ movie.vote_average | number: '1.0-1' }}
+            </span>
+
+            <i class="bi bi-heart wishlist-icon position-absolute top-0 end-0 m-2 text-danger"></i>
+
+            <div class="movie-info p-2 d-flex justify-content-between align-items-center">
+              <div>
+                <p class="movie-title fw-bold m-0">{{ movie.title }}</p>
+                <p class="movie-date text-muted small m-0">{{ movie.release_date | date }}</p>
+              </div>
+              <i class="bi bi-star-fill text-warning"></i>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+
+      <section>
+        <div class="d-flex justify-content-center mt-5">
+          <nav>
+            <ul class="pagination pagination-custom">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&lt;</span>
+                </a>
+              </li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">5</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&gt;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+
+    </div>
