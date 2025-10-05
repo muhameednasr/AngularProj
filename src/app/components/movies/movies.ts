@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MoviesService } from '../../shared/movies-service';
 import { Imovie } from '../../models/imovie';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { WishlistService } from '../../shared/wishlist-service';
 
 @Component({
   selector: 'app-movies',
@@ -13,6 +14,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './movies.css',
 })
 export class Movies {
+  
+
   movies$!: Observable<Imovie[]>;
 
   currentPage = 1;
@@ -21,8 +24,11 @@ export class Movies {
 
   imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-  constructor(private movieService: MoviesService) {}
+  constructor(private movieService: MoviesService,private wishListService:WishlistService) {}
 
+  addtowishlist(movie: Imovie) {
+this.wishListService.addToWishlist(movie);
+}
   ngOnInit(): void {
     this.movies$ = this.movieService.getMovies();
   }

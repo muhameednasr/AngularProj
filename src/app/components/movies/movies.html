@@ -35,8 +35,8 @@
             <span>{{ (movie.vote_average * 10) | number: '1.0-0' }}%</span>
           </div>
 
-
-          <i class="bi bi-heart-fill wishlist-icon"></i>
+()
+          <i class="bi bi-heart-fill wishlist-icon" (click)="addtowishlist(movie)"></i>
 
           <div class="movie-info">
             <div>

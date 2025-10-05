@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="container">
+  <h3 class="card text-center rounded-1 p-2 m-2 ">Login </h3>
+  <form #loginForm="ngForm" (ngSubmit)="submitForm()">
+    <div class="row">
+      <div class="col-4">
+
+      </div>
+      <div class="col-4 text-center card p-3 m-3" style="box-shadow: 5px 5px 5px rgb(234, 137, 137);">
+        <div class=" card-text" style="width: 100%;">
+          <label for="email" class="card-title ">Email</label>
+        </div>
+
+        <div class="" style="width: 100%;">
+          <input id="email" type="email" name="email" placeholder="email" class="form-control" #email="ngModel"
+            [(ngModel)]="loginData.email" required="" minlength="3" maxlength="30" />
+        </div>
+        <!-- ErrorHandling -->
+        <div *ngIf="email.touched && email.invalid" class="form-text text-danger">
+          <small *ngIf="email?.errors?.['required']">Email is required</small>
+          <small *ngIf="email?.errors?.['email']">Please, enter a valid email</small>
+        </div>
+
+        <div class=" card-text" style="width: 100%;">
+          <label for="password" class="card-title ">Password</label>
+        </div>
+        <div class="" style="width: 100%;">
+          <input id="password" type="password" name="password" placeholder="password" class="form-control"
+            #password="ngModel" [(ngModel)]="loginData.password" required="" minlength="3" maxlength="10" />
+        </div>
+        <!-- ErrorHandling -->
+        <div *ngIf="password.touched && password.invalid" class="form-text text-danger">
+          <small *ngIf="password?.errors?.['required']">password is required</small>
+          <small *ngIf="password?.errors?.['minlength']">password must be at least 3</small>
+        </div>
+
+        <button type="submit" class="btn m-2" [ngClass]="loginForm.valid ? 'btn-success' : 'btn-primary'"
+          [disabled]="loginForm.invalid">
+          Submit
+        </button>
+        <div>
+          Don't have account? <span><a routerLink="/register">Register</a></span>
+        </div>
+      </div>
+      <div class="col-4">
+
+      </div>
+
+
+    </div>
+  </form>
+</div>

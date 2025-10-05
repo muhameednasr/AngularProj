@@ -1,1 +1,103 @@
-<p>register works!</p>
+<div class="container">
+
+  <h2 class="m-3 text-center card p-2 ">Register Form</h2>
+  <form class="mb-3" [formGroup]="loginForm" (ngSubmit)="submitFormData()">
+
+    <div class="row">
+      <div class="col-4">
+
+      </div>
+      <div class="col-4 text-center card p-2 m-3" style="box-shadow: 5px 5px 5px rgb(234, 137, 137);">
+
+        <!--Name-->
+        <div class="mb-3">
+          <label for="name">Name:</label>
+          <input id="name" type="text" name="name" class="form-control w-75 mx-auto" formControlName="name" />
+
+          <!--Error Handling-->
+          <div *ngIf="nameCtrl.touched && nameCtrl.invalid" class="form-text text-danger text-center">
+            <small *ngIf="nameCtrl?.errors?.['required']">Username is required</small>
+            <small *ngIf="nameCtrl?.errors?.['minlength']">Minlength is 3</small>
+            <small *ngIf="nameCtrl?.errors?.['maxlength']">Maxlength is 10</small>
+          </div>
+        </div>
+
+        <!--Username-->
+        <div class="mb-3">
+          <label for="username">Username:</label>
+          <input id="username" type="text" name="username" class="form-control w-75 mx-auto"
+            formControlName="username" />
+
+          <!--Error Handling-->
+          <div *ngIf="usernameCtrl.touched && usernameCtrl.invalid" class="form-text text-danger text-center">
+            <small *ngIf="usernameCtrl?.errors?.['required']">Username is required</small>
+            <small *ngIf="usernameCtrl?.errors?.['minlength']">Minlength is 3</small>
+            <small *ngIf="usernameCtrl?.errors?.['maxlength']">Maxlength is 10</small>
+            <br>
+            <small *ngIf="usernameCtrl?.errors?.['pattern']">should include capital letters and numbers</small>
+          </div>
+        </div>
+
+        <!--Email-->
+        <div class="mb-3">
+          <label for="email">Email:</label>
+          <input id="email" type="email" name="email" class="form-control w-75 mx-auto" formControlName="email" />
+          <!--Error Handling-->
+          <div *ngIf="emailCtrl.touched && emailCtrl.invalid" class="form-text text-danger text-center">
+            <small *ngIf="emailCtrl?.errors?.['required']">Email is required</small>
+            <small *ngIf="emailCtrl?.errors?.['email']">Please, enter a valid email</small>
+          </div>
+        </div>
+
+        <!--Password-->
+        <div class="mb-3">
+          <label for="password">Password:</label>
+          <input id="password" type="password" name="password" class="form-control w-75 mx-auto"
+            formControlName="password" />
+          <!--Error Handling-->
+          <div *ngIf="passwordCtrl.touched && passwordCtrl.invalid" class="form-text text-danger text-center">
+            <small *ngIf="passwordCtrl?.errors?.['required']">password is required</small>
+            <small *ngIf="passwordCtrl?.errors?.['minlength']">password must be at least 6</small>
+            <br>
+            <small *ngIf="passwordCtrl?.errors?.['pattern']">should include capital letters and numbers</small>
+
+          </div>
+        </div>
+
+
+        <!--ConfirmPassword-->
+        <div class="mb-3">
+          <label for="confirmPassword">Confirm Password:</label>
+          <input id="confirmPassword" type="password" name="confirmPassword" class="form-control w-75 mx-auto"
+            formControlName="confirmPassword" />
+          <!--Error Handling-->
+          <div *ngIf="confirmPasswordCtrl.touched && confirmPasswordCtrl.invalid"
+            class="form-text text-danger text-center">
+            <small *ngIf="confirmPasswordCtrl?.errors?.['required']">password is required</small>
+            <small *ngIf="confirmPasswordCtrl?.errors?.['minlength']">password must be at least 6</small>
+            <br>
+            <small *ngIf="confirmPasswordCtrl?.errors?.['pattern']">should include capital letters and numbers</small>
+
+          </div>
+        </div>
+        <!-- matching handle -->
+        <div *ngIf="loginForm.errors?.['passwordMismatch'] && loginForm.touched" class="text-danger">
+          Password and Confirm Password must match
+        </div>
+
+
+        <button type="submit" class="btn" [ngClass]="loginForm.valid ? 'btn-success' : 'btn-primary'"
+          [disabled]="loginForm.invalid">
+          Create
+        </button>
+
+      </div>
+      <div class="col-4">
+
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

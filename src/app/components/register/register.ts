@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../auth/user-service';
 import { Iuser } from '../../models/iuser';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [FormsModule,CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
@@ -47,12 +48,10 @@ user: Iuser[] = [];
   submitFormData() {
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
-      this.userService.addUser({
-        fullName: formData.name,
-        userName: formData.username,
+      const user:Iuser={username: formData.username,
         email: formData.email,
-        password: formData.password,
-      });
+        password: formData.password,wishlist:[]}
+      this.userService.addUser( user);
       this.router.navigate(['/']);
     }
     alert(this.loginForm.get('name')?.value + ' added successfully');
