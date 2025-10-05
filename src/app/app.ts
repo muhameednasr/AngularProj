@@ -7,7 +7,6 @@ import { Footer } from './components/footer/footer';
 import { Watchlist } from './components/watchlist/watchlist';
 
 import { DetailsPage } from "./components/details-page/details-page";
-import { Header } from "./components/header/header";
 import { I } from '@angular/cdk/keycodes';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -17,7 +16,6 @@ import { MovieService } from './auth/movie-service';
   selector: 'app-root',
   imports: [RouterOutlet, Header, Movies, ParameterizedMovie, Footer, Watchlist],
   templateUrl: './app.html',
-  styleUrl: './app.css',
   styleUrl: './app.css',
   standalone: true
 })

@@ -25,11 +25,17 @@ export const routes: Routes = [
   },
 
   { path: 'watchlist', component: Watchlist, title: 'watchlist', canActivate: [authGuardGuard] },
-];
-export const routes: Routes = [
-  { path: '', redirectTo: 'movie/634649', pathMatch: 'full' },
-{ path: 'login-page', loadComponent: () => import('./components/login-page/login-page').then(c => c.LoginPage) },
 
-  { path: 'movie/:id', loadComponent: () => import('./components/details-page/details-page').then(c => c.DetailsPage) },
-  { path: '**', redirectTo: '' }
+  { path: '', redirectTo: 'movie/634649', pathMatch: 'full' },
+  {
+    path: 'login-page',
+    loadComponent: () => import('./components/login-page/login-page').then((c) => c.LoginPage),
+  },
+
+  {
+    path: 'movie/:id',
+    loadComponent: () =>
+      import('./components/details-page/details-page').then((c) => c.DetailsPage),
+  },
+  { path: '**', redirectTo: '' },
 ];
