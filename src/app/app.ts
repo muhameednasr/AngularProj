@@ -6,11 +6,18 @@ import { ParameterizedMovie } from './components/parameterized-movie/parameteriz
 import { Footer } from './components/footer/footer';
 import { Watchlist } from './components/watchlist/watchlist';
 
+import { DetailsPage } from "./components/details-page/details-page";
+import { I } from '@angular/cdk/keycodes';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { WishlistService } from './auth/wishlist-service';
+import { MovieService } from './auth/movie-service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Header, Movies, ParameterizedMovie, Footer, Watchlist],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  standalone: true
 })
 export class App {
   protected readonly title = signal('AngularProj');
