@@ -26,6 +26,15 @@ export class MoviesService {
     );
   }
 
+  //recommendations
+  getRecommendations(id: number): Observable<Imovie[]> {
+    return this.http
+      .get<{ results: Imovie[] }>(
+        `${this.baseURL}/movie/${id}/recommendations?api_key=${this.apiKey}`
+      )
+      .pipe(map((res) => res.results));
+  }
+
   // addMovie(movie: Imovie): Observable<Imovie> {
   //   return this.http.post<Imovie>(this.baseURL, movie);
   // }
