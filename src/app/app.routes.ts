@@ -1,4 +1,8 @@
 import { Routes } from '@angular/router';
+import { Movies } from './components/movies/movies';
+import { ParameterizedMovie } from './components/parameterized-movie/parameterized-movie';
+import { authGuardGuard } from './auth/auth-guard-guard';
+import { Watchlist } from './components/watchlist/watchlist';
 import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -8,6 +12,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { provideHttpClient } from '@angular/common/http';
 
+export const routes: Routes = [
+  {
+    path: '',
+    component: Movies,
+    title: 'home',
+  },
+  {
+    path: 'movies/:id',
+    component: ParameterizedMovie,
+    title: 'movie',
+  },
+
+  { path: 'watchlist', component: Watchlist, title: 'watchlist', canActivate: [authGuardGuard] },
+];
 export const routes: Routes = [
   { path: '', redirectTo: 'movie/634649', pathMatch: 'full' },
 { path: 'login-page', loadComponent: () => import('./components/login-page/login-page').then(c => c.LoginPage) },
