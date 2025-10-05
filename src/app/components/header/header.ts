@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './header.css'
 })
 export class Header {
+  wishlist: any;
+  count: number = 0;
 
+  ngOnInit() {
+    this.wishlist?.list$?.subscribe((list: string | any[]) => this.count = list.length);
+  }
 }

@@ -1,0 +1,65 @@
+.login-card {
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  background: #fff;
+  font-family: system-ui, Roboto, Arial;
+  height:auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 8px;
+
+}
+.login-card h2 { margin-bottom: 12px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display:block; font-size:14px; margin-bottom:6px; }
+.form-group input {
+  width:100%; padding:8px 10px; border-radius:6px; border:1px solid #ddd;
+}
+.actions { margin-top:10px; }
+.btn {
+  background:#1976d2; color:#fff; border:none; padding:8px 14px; border-radius:6px;
+  cursor:pointer;
+}
+.links { margin-top:10px; font-size:13px; color:#555; }
+.links a { color:#1976d2; text-decoration:none; }
+.error { color: #b00020; margin-top:10px; }
+
+h2{
+    text-align: center;
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #191fd2;
+}
+button{
+    width: 100%;
+    background-color: #191fd2;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+button:hover{
+    background-color: #0d0fb5;
+}
+a{
+    text-decoration: none;
+    color: #191fd2;
+    font-weight: bold;
+    margin-left: 5px;
+    text-align: center;
+    display: block;
+}
+a:hover{
+    color: #0d0fb5;
+}
+label{
+    color: #191fd2;
+
+}
