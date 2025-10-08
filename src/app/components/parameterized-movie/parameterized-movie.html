@@ -1,1 +1,109 @@
-<p>parameterized-movie works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="details-container container my-4" *ngIf="!loading && movie; else loadingOrError">
+  <div class="row g-4 align-items-start">
+
+    <!-- Img -->
+    <div class="col-md-4 text-center">
+      <img class="img-fluid rounded shadow"
+           [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'assets/no-poster.png'"
+           [alt]="movie.title">
+    </div>
+
+    <!-- Details -->
+    <div class="col-md-8">
+      <div class="right">
+      <h1>{{ movie.title }}</h1>
+
+      <!-- Date & Vote Avg -->
+      <p class="meta text-muted">
+        {{ movie.release_date | date:'mediumDate' }}
+        • ⭐ {{ movie.vote_average }} ({{ movie.vote_count }})
+      </p>
+
+      <!-- Buttons -->
+      <div class="d-flex gap-3 my-2">
+      <button mat-icon-button color="warn" (click)="aaddToWishList(movie)">
+  <mat-icon *ngIf="inWishlist; else notAdded">favorite</mat-icon>
+  <ng-template #notAdded>
+    <mat-icon>favorite_border</mat-icon>
+  </ng-template>
+</button>
+
+
+
+        <button mat-icon-button><mat-icon>share</mat-icon></button>
+        <button mat-icon-button><mat-icon>play_arrow</mat-icon></button>
+        <button mat-icon-button><mat-icon>bookmark</mat-icon></button>
+      </div>
+
+      <!-- Description -->
+      <p class="overview">{{ movie.overview }}</p>
+
+      <!-- Genres -->
+      <div class="chips mb-2 div2">
+        <span class="chip badge bg-secondary me-1 span1" *ngFor="let g of movie.genres">
+          {{ g.name }}
+        </span>
+      </div>
+
+      <!-- Duration & Language -->
+      <p>
+        Duration: {{ movie.runtime | runtime }}
+        • Language: {{ movie.spoken_languages?.[0]?.english_name }}
+      </p>
+      
+
+      <!-- Website -->
+      <a *ngIf="movie.homepage"
+         [href]="movie.homepage"
+         target="_blank"
+         rel="noopener"
+         class="btn btn-outline-primary btn-sm a1">
+        Website
+      </a>
+
+      <!-- Rating -->
+      <div class="rating mt-3">
+        <span *ngFor="let star of stars; let i = index"
+              (click)="rate(i + 1)"
+              [class.filled]="i < userRating">
+          ★
+        </span>
+      </div>
+      <p *ngIf="userRating" class="p1">Your rating: {{ userRating }} / 5</p>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Loading & Error -->
+<ng-template #loadingOrError>
+  <div class="text-center my-5">
+    <p *ngIf="loading">Loading movie...</p>
+    <p *ngIf="!loading && error">{{ error }}</p>
+  </div>
+</ng-template>
+<br>
+<!-- Recommendations -->
+<section class="recommendations container my-4 sec2">
+  <h2>Recommendations</h2>
+  <div class="row">
+    <div class="col-md-2 mb-3" *ngFor="let r of recs" (click)="navigateTo(r.id)">
+      <div class="card h-100 shadow-sm">
+        <img class="card-img-top" [src]="getPosterUrl(r.poster_path ?? undefined)" [alt]="r.title">
+        <div class="card-body text-center">
+          <div class="card-title">{{ r.title }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
