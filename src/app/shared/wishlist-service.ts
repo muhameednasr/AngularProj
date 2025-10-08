@@ -1,30 +1,43 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Imovie } from '../models/imovie';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WishlistService {
-  private key = 'movie_wishlist';
-  private list: number[] = JSON.parse(localStorage.getItem(this.key) || '[]');
-  private subj = new BehaviorSubject<number[]>([...this.list]);
-  list$ = this.subj.asObservable();
+private _wishlist$ = new BehaviorSubject<Imovie[]>([]);
+readonly wishlist$: Observable<Imovie[]> = this._wishlist$.asObservable();
 
-  isInWishlist(id: number) {
-    return this.list.includes(id);
+private _total$ = new BehaviorSubject<number>(0);
+readonly total$: Observable<number> = this._total$.asObservable();
+
+addToWishlist(movie: Imovie) {
+  const currentWishlist = this._wishlist$.value;
+
+  
+  const exists = currentWishlist.some(p => p.id === movie.id);
+
+  if (!exists) {
+    const updatedWishlist = [...currentWishlist, movie];
+    this._wishlist$.next(updatedWishlist);
+    this._total$.next(updatedWishlist.length);
   }
+}
 
-  toggle(id: number) {
-    if (this.isInWishlist(id)) {
-      this.list = this.list.filter((i) => i !== id);
-    } else {
-      this.list.push(id);
+  removeFromWishlist(id: number) {
+    const updatedCart = this._wishlist$.value.filter((p) => p.id !== id);
+    this._wishlist$.next(updatedCart);
+    if (this._total$.value > 0) {
+      this._total$.next(this._total$.value - 1);
     }
-    localStorage.setItem(this.key, JSON.stringify(this.list));
-    this.subj.next([...this.list]);
+  }
+  clearWishlist() {
+    this._wishlist$.next([]);
+  }
+  getWishlist() {
+    return this.wishlist$;
   }
 
-  getAll() {
-    return [...this.list];
-  }
+
 }
