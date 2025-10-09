@@ -3,6 +3,8 @@ import { Movies } from './components/movies/movies';
 import { ParameterizedMovie } from './components/parameterized-movie/parameterized-movie';
 import { authGuardGuard } from './auth/auth-guard-guard';
 import { Watchlist } from './components/watchlist/watchlist';
+import { Login } from './components/login/login';
+import { Register } from './components/register/register';
 
 export const routes: Routes = [
   {
@@ -16,5 +18,18 @@ export const routes: Routes = [
     title: 'movie',
   },
 
-  { path: 'watchlist', component: Watchlist, title: 'watchlist', canActivate: [authGuardGuard] },
+  { path: 'wishlist', component: Watchlist, title: 'wishlist', canActivate: [authGuardGuard] },
+  { path: 'login', component: Login, title: 'Login', canActivate: [authGuardGuard] },
+  { path: 'Register', component: Register, title: 'Register', canActivate: [authGuardGuard] },
+
+
+
+
+
+
+
+
+
+
+
 ];
