@@ -1,6 +1,6 @@
-/* 🌟 الخلفية العامة */
+/* Movies component styles - flat valid CSS */
 .movies-container {
-  background-color: #f9f9f9; /* أبيض ناعم */
+  background-color: #f9f9f9;
   color: #000;
   min-height: 100vh;
   padding: 30px;
@@ -8,11 +8,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* 🔍 مربع البحث */
-.search-box {
-  margin-bottom: 30px;
-}
-
+.search-box { margin-bottom: 30px; }
 .search-box input {
   width: 280px;
   padding: 10px;
@@ -24,7 +20,6 @@
   outline: none;
   font-weight: 500;
 }
-
 .search-box button {
   margin-left: 8px;
   background-color: #FFD700;
@@ -36,190 +31,52 @@
   font-weight: bold;
   transition: 0.3s;
 }
+.search-box button:hover { background-color: #000; color: #FFD700; }
 
-.search-box button:hover {
-  background-color: #000;
-  color: #FFD700;
-}
+.movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; justify-items: center; }
 
-/* 🎞 شبكة الأفلام */
-.movies-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 25px;
-  justify-items: center;
-}
+.movie-card { background-color: #fff; border-radius: 12px; overflow: hidden; transition: 0.3s ease; position: relative; width: 220px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.movie-card:hover { transform: translateY(-6px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.movie-card.selected { background-color: #d4f7dc; box-shadow: 0 10px 20px rgba(0,128,0,0.08); }
+.movie-card.selected .movie-title, .movie-card.selected .movie-date { color: #0b6b22; }
 
-/* 🎬 كارت الفيلم */
-.movie-card {
-  background-color: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: 0.3s ease;
-  position: relative;
-  width: 220px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+.image-container { position: relative; }
+.image-container img { width: 100%; display: block; border-radius: 12px 12px 0 0; height: 270px; object-fit: cover; }
 
-.movie-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
+.fav-btn { position: absolute; bottom: 10px; right: 10px; background-color: rgba(255,255,255,0.95); border: none; border-radius: 50%; padding: 8px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 18px; }
+.fav-btn:hover { background-color: #FFD700; }
+.fav-btn.active i { color: red; animation: pop 0.3s ease; }
+@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
-<<<<<<< HEAD
-.movie-card.selected {
-  background-color: #d4f7dc; /* light green background */
-  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.08);
-}
+.movie-info { padding: 12px; text-align: left; }
+.movie-info h3 { font-size: 15px; font-weight: 600; color: #000; margin: 5px 0; }
+.movie-info .rating { color: #FFD700; font-weight: bold; }
 
-.movie-card.selected .movie-title,
-.movie-card.selected .movie-date {
-  color: #0b6b22; /* dark green text for contrast */
-}
+.pagination { margin-top: 40px; display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pagination button { background-color: transparent; color: #000; border: 1px solid #FFD700; padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+.pagination button:hover, .pagination button.active { background-color: #FFD700; color: #000; }
+.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.heart-btn {
+.rating-circle { position: absolute; top: 8px; left: 8px; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: conic-gradient(#21d07a 0deg, #204529 0deg); }
+.rating-circle span { position: relative; z-index: 2; font-weight: 700; color: #fff; }
+
+.loading { padding: 40px; font-size: 18px; }
+
+/* position wishlist heart on top-left of image */
+.image-container { position: relative; }
+.image-heart {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 3;
-}
-
-.heart-btn.selected-heart {
-  background-color: #b7f0c8; /* green-ish */
-  border-radius: 6px;
-}
-
-.heart-btn.selected-heart span {
-  color: #0b6b22;
-}
-
-.movie-image {
-  height: 270px;
-  object-fit: cover;
-=======
-/* 📸 الصورة */
-.image-container {
-  position: relative;
-}
-
-.image-container img {
->>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
-  width: 100%;
-  display: block;
-  border-radius: 12px 12px 0 0;
-}
-
-/* ❤️ زر القلب */
-.fav-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-<<<<<<< HEAD
-  font-size: 1.3rem;
-  color: #ffcc00;
-}
-
-.movie-info {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.movie-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin: 0;
-  color: #000;
-}
-
-.movie-date {
-  font-size: 0.8rem;
-  color: #6c757d;
-  margin: 0;
-}
-
-.pagination-custom .page-link {
-=======
-  background-color: rgba(255, 255, 255, 0.95);
->>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
-  border: none;
+  top: 8px;
+  right: 8px;
+  z-index: 20;
+  background: rgba(0,0,0,0.35);
   border-radius: 50%;
-  padding: 8px;
-  color: #000;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-size: 18px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.fav-btn:hover {
-  background-color: #FFD700;
-}
-
-.fav-btn.active i {
-  color: red;
-  animation: pop 0.3s ease;
-}
-
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-  100% { transform: scale(1); }
-}
-
-/* ℹ️ تفاصيل الفيلم */
-.movie-info {
-  padding: 12px;
-  text-align: left;
-}
-
-.movie-info h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #000;
-  margin: 5px 0;
-}
-
-.movie-info .rating {
-  color: #FFD700;
-  font-weight: bold;
-}
-
-/* 📄 Pagination */
-.pagination {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
+  padding: 6px 8px;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.pagination button {
-  background-color: transparent;
-  color: #000;
-  border: 1px solid #FFD700;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: bold;
-}
+*** End Patch
 
-<<<<<<< HEAD
-.rating-circle span {
-  position: relative;
-  z-index: 2;
-=======
-.pagination button:hover,
-.pagination button.active {
-  background-color: #FFD700;
-  color: #000;
-}
-
-.pagination button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
->>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
-}
+/* End of movies.css */

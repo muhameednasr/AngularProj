@@ -8,9 +8,8 @@ import { Imovie } from '../../models/imovie';
   selector: 'app-watchlist',
   imports: [CommonModule, NgForOf, NgIf],
 
-  // template and styles live in the sibling `wishlist` folder; reference them explicitly
-  templateUrl: '../watchlist/watchlist.html',
-  // styleUrls: ['../wishlist/watchlist.css'],
+  templateUrl: './watchlist.html',
+  styleUrls: ['./watchlist.css'],
 })
 export class Watchlist {
   wishlist$!: Observable<Imovie[]>;
@@ -26,5 +25,6 @@ export class Watchlist {
   }
 }
 
-// Backwards-compatibility alias: export the same alias here as well
+// Backwards-compatibility alias: some code/tests import { Wishlist }
+// while the class is named Watchlist. Export an alias to satisfy both.
 export { Watchlist as Wishlist };

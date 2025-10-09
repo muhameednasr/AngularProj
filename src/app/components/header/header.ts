@@ -16,7 +16,9 @@ import { LanguageService, LangCode } from '../../shared/language-service';
 export class Header {
   total$!: Observable<number>;
   isLoggedIn$!: Observable<boolean>;
-  currentLang: string = 'EN'; 
+  currentLang: string = 'EN';
+
+  
 
   constructor(
     private wishlist: WishlistService,
@@ -25,13 +27,18 @@ export class Header {
     private languageService: LanguageService
   ) {}
 
+  
+
   ngOnInit(): void {
     this.total$ = this.wishlist.total$;
     this.isLoggedIn$ = this.auth.isLoggedIn$;
-
-    this.languageService.currentLanguage$.subscribe(lang => {
-      this.currentLang = lang.toUpperCase(); 
-    });
+    // Initialize header language display once; do NOT subscribe so header won't re-render on language changes
+    try {
+      const lang = this.languageService.getLanguage();
+      this.currentLang = (lang || 'en').toUpperCase();
+    } catch (e) {
+      // ignore if document-less environment
+    }
   }
 
   logout() {
@@ -41,5 +48,6 @@ export class Header {
 
   setLanguage(code: LangCode) {
     this.languageService.setLanguage(code);
+    this.currentLang = code.toUpperCase();
   }
 }

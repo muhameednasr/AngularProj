@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { NotificationService } from './notification-service';
 
 export type LangCode = 'en' | 'ar' | 'fr' | 'zh';
 
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
-  
   private _lang$ = new BehaviorSubject<LangCode>('en');
   readonly currentLanguage$ = this._lang$.asObservable();
+  
+  constructor(private notifier: NotificationService) {}
 
   
   getLanguage(): LangCode {
@@ -40,6 +42,11 @@ export class LanguageService {
     // update document direction for Arabic
     if (typeof document !== 'undefined') {
       document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
+    }
+    try {
+      this.notifier.notify(`Language changed to ${code}`);
+    } catch (e) {
+      // ignore
     }
   }
 }

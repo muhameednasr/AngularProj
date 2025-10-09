@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MoviesService } from '../../shared/movies-service';
+import { LanguageService } from '../../shared/language-service';
+import { combineLatest } from 'rxjs';
 import { Imovie } from '../../models/imovie';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, switchMap, map } from 'rxjs';
 
 @Component({
   selector: 'app-search-results',
@@ -16,13 +18,13 @@ export class SearchResults {
   movies$!: Observable<Imovie[]>;
   imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-  constructor(private route: ActivatedRoute, private moviesService: MoviesService) {}
+  constructor(private route: ActivatedRoute, private moviesService: MoviesService, private languageService: LanguageService) {}
 
   ngOnInit(): void {
-    this.movies$ = this.route.queryParamMap.pipe(
-      switchMap((params) => {
+    this.movies$ = combineLatest([this.route.queryParamMap, this.languageService.currentLanguage$]).pipe(
+      switchMap(([params]) => {
         this.query = params.get('q') || '';
-        return this.moviesService.searchMovies(this.query);
+        return this.moviesService.searchMovies(this.query).pipe(map((res) => res.results));
       })
     );
   }
