@@ -1,21 +1,72 @@
-body {
-  background-color: #ffffff;
-  font-family: 'Segoe UI', sans-serif;
+/* 🌟 الخلفية العامة */
+.movies-container {
+  background-color: #f9f9f9; /* أبيض ناعم */
+  color: #000;
+  min-height: 100vh;
+  padding: 30px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
 }
 
-.movie-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #fff;
-  border-radius: 16px;
-  overflow: hidden;
+/* 🔍 مربع البحث */
+.search-box {
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  width: 280px;
+  padding: 10px;
+  border: 2px solid #000;
+  border-radius: 25px;
+  background: transparent;
+  color: #000;
+  text-align: center;
+  outline: none;
+  font-weight: 500;
+}
+
+.search-box button {
+  margin-left: 8px;
+  background-color: #FFD700;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 25px;
   cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.search-box button:hover {
+  background-color: #000;
+  color: #FFD700;
+}
+
+/* 🎞 شبكة الأفلام */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+/* 🎬 كارت الفيلم */
+.movie-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s ease;
+  position: relative;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .movie-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+<<<<<<< HEAD
 .movie-card.selected {
   background-color: #d4f7dc; /* light green background */
   box-shadow: 0 10px 20px rgba(0, 128, 0, 0.08);
@@ -45,25 +96,25 @@ body {
 .movie-image {
   height: 270px;
   object-fit: cover;
+=======
+/* 📸 الصورة */
+.image-container {
+  position: relative;
+}
+
+.image-container img {
+>>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
   width: 100%;
+  display: block;
+  border-radius: 12px 12px 0 0;
 }
 
-.rating-badge {
+/* ❤️ زر القلب */
+.fav-btn {
   position: absolute;
-  bottom: 80px;
-  left: 10px;
-  background-color: #212529;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 8px;
-}
-
-.wishlist-icon {
-  position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
+<<<<<<< HEAD
   font-size: 1.3rem;
   color: #ffcc00;
 }
@@ -89,36 +140,86 @@ body {
 }
 
 .pagination-custom .page-link {
+=======
+  background-color: rgba(255, 255, 255, 0.95);
+>>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
   border: none;
-  color: #000;
-}
-.pagination-custom .page-item.active .page-link {
-  background-color: #ffc107;
   border-radius: 50%;
-  color: #212529;
-  font-weight: bold;
-}
-.pagination-custom .page-link:hover {
+  padding: 8px;
   color: #000;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 18px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.rating-circle {
-  position: absolute;
-  bottom: 60px;
-  left: 10px;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+.fav-btn:hover {
+  background-color: #FFD700;
+}
+
+.fav-btn.active i {
+  color: red;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ℹ️ تفاصيل الفيلم */
+.movie-info {
+  padding: 12px;
+  text-align: left;
+}
+
+.movie-info h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  margin: 5px 0;
+}
+
+.movie-info .rating {
+  color: #FFD700;
+  font-weight: bold;
+}
+
+/* 📄 Pagination */
+.pagination {
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  font-weight: bold;
-  font-size: 0.9rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
+.pagination button {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #FFD700;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+<<<<<<< HEAD
 .rating-circle span {
   position: relative;
   z-index: 2;
+=======
+.pagination button:hover,
+.pagination button.active {
+  background-color: #FFD700;
+  color: #000;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+>>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
 }

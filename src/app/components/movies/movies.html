@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container py-4">
   <section class="hero-section">
     <h1 class="fw-bold">Welcome to our movie app</h1>
@@ -80,16 +81,39 @@
           </div>
         </div>
       </ng-container>
+=======
+<div class="movies-container">
+  <!-- 🔍 Search -->
+  <div class="search-box">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search movies..." />
+    <button (click)="onSearch()">🔍</button>
+  </div>
+
+  <!-- 🎬 Movies -->
+  <div *ngIf="!loading; else loadingTpl" class="movies-grid">
+    <div *ngFor="let movie of movies" class="movie-card">
+      <div class="image-container">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}" />
+        <button class="fav-btn" 
+                [class.active]="isFavorite(movie)" 
+                (click)="toggleFavorite(movie)">
+          <i [class]="isFavorite(movie) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+        </button>
+      </div>
+      <div class="movie-info">
+        <h3>{{ movie.title }}</h3>
+        <span class="rating">⭐ {{ movie.vote_average | number:'1.1-1' }}</span>
+      </div>
+>>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
     </div>
   </div>
 
-  <!-- 🔹 Pagination -->
-  <nav class="d-flex justify-content-center mt-4">
-    <ul class="pagination pagination-custom">
-      <li class="page-item" [class.disabled]="currentPage === 1">
-        <button class="page-link" (click)="goToPage(currentPage - 1)">‹</button>
-      </li>
+  <!-- ⏳ Loading -->
+  <ng-template #loadingTpl>
+    <div class="loading">Loading movies...</div>
+  </ng-template>
 
+<<<<<<< HEAD
       @for (page of pages; track page) {
       <li class="page-item" [class.active]="page === currentPage">
         <button class="page-link" (click)="goToPage(page)">
@@ -103,4 +127,16 @@
       </li>
     </ul>
   </nav>
+=======
+  <!-- 📄 Pagination -->
+  <div class="pagination">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">« Prev</button>
+    <button *ngFor="let page of pagesToShow"
+            (click)="goToPage(page)"
+            [class.active]="page === currentPage">
+      {{ page }}
+    </button>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next »</button>
+  </div>
+>>>>>>> c0d7798a8b57f58e1a48b9d158db44d78d7c444e
 </div>
