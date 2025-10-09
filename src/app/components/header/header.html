@@ -1,18 +1,72 @@
 <nav class="navbar navbar-custom d-flex justify-content-between align-items-center px-4">
-  <span class="d-none d-md-block"></span>
-  <div class="navbar-brand me-auto">Movie App</div>
-  <div class="d-flex align-items-center">
-    <div class="dropdown">
-      <span class=" dropdown-toggle mx-3" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-        EN
-      </span>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <li><button class="dropdown-item" type="button">AR</button></li>
-        <li><button class="dropdown-item" type="button">SP</button></li>
+  <a
+    class="navbar-brand text-decoration-none d-flex align-items-center"
+    role="button"
+    aria-label="Go to home"
+    [routerLink]="['/']"
+  >
+    <img
+      src="/assets/logo.svg"
+      alt="Movie App Logo"
+      class="brand-logo me-2"
+      width="50"
+      height="50"
+      onerror="this.style.display='none'"
+    />
+    <span class="brand-title">Movie App</span>
+  </a>
 
+  <div class="d-flex align-items-center gap-3 ms-auto">
+    <div class="dropdown">
+      <button
+        class="btn btn-sm btn-light dropdown-toggle language-btn"
+        id="dropdownMenu2"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        type="button"
+      >
+        {{ currentLang | uppercase }}
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <li><button class="dropdown-item" type="button" (click)="setLanguage('en')">EN</button></li>
+        <li><button class="dropdown-item" type="button" (click)="setLanguage('ar')">AR</button></li>
+        <li><button class="dropdown-item" type="button" (click)="setLanguage('fr')">FR</button></li>
+        <li><button class="dropdown-item" type="button" (click)="setLanguage('zh')">ZH</button></li>
       </ul>
     </div>
-    <span class="watchlist-nav-icon me-2"><i class="bi bi-heart-fill"></i></span>
-    <span class="text-dark fw-bold">watchlist</span>
+
+    <a
+      [routerLink]="['/wishlist']"
+      class="wishlist-link d-flex align-items-center text-decoration-none"
+    >
+      <i class="bi bi-heart-fill me-2"></i>
+      <span class="text-dark fw-bold">Wishlist</span>
+      <span class="badge wishlist-badge ms-2">{{ (total$ | async) || 0 }}</span>
+    </a>
+
+    <div class="auth-actions d-flex align-items-center">
+      <button
+        *ngIf="!(isLoggedIn$ | async)"
+        class="btn btn-sm btn-outline-primary me-2"
+        [routerLink]="['/login']"
+      >
+        Login
+      </button>
+      <a
+        *ngIf="!(isLoggedIn$ | async)"
+        [routerLink]="['/register']"
+        class="btn btn-sm btn-outline-success me-2"
+      >
+        Register
+      </a>
+      <button
+        *ngIf="isLoggedIn$ | async"
+        class="btn btn-sm btn-outline-secondary"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+    </div>
   </div>
 </nav>

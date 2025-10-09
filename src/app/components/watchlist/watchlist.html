@@ -1,1 +1,24 @@
-<p>watchlist works!</p>
+<div class="container py-4">
+  <h3>Your Wishlist</h3>
+  <div *ngIf="wishlist$ | async as wishlist">
+    <div *ngIf="wishlist.length === 0">No items in your wishlist.</div>
+    <div class="row g-3">
+      <div class="col-12 col-md-6" *ngFor="let m of wishlist">
+        <div class="card p-2 d-flex flex-row align-items-center">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w200' + m.poster_path"
+            alt=""
+            style="width: 60px; height: auto"
+          />
+          <div class="ms-3">
+            <div>{{ m.title }}</div>
+            <small class="text-muted">{{ m.release_date }}</small>
+          </div>
+          <div class="ms-auto">
+            <button class="btn btn-sm btn-danger" (click)="remove(m.id)">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

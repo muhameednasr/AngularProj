@@ -1,1 +1,31 @@
-<p>parameterized-movie works!</p>
+<div class="container py-4" *ngIf="movie; else loadingTpl">
+  <div class="row">
+    <div class="col-md-4">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500' + movie?.poster_path"
+        class="img-fluid"
+        [alt]="movie?.title"
+      />
+    </div>
+    <div class="col-md-8">
+      <h2>{{ movie?.title }}</h2>
+      <p class="text-muted">{{ movie?.release_date | date : 'MMM dd, yyyy' }}</p>
+      <p>{{ movie?.overview }}</p>
+      <p><strong>Rating:</strong> {{ movie?.vote_average }}</p>
+      <button
+        class="btn"
+        [class.btn-success]="added"
+        [disabled]="added"
+        (click)="addToWishList(movie!)"
+      >
+        <span *ngIf="!added">Add to wishlist</span>
+        <span *ngIf="added">Added</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="text-center py-4" *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="text-danger">Error: {{ error }}</div>
+</ng-template>

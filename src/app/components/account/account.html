@@ -1,0 +1,5 @@
+<div class="container py-4">
+  <h3>Account details</h3>
+  <p *ngIf="auth.isLoggedIn">You are logged in.</p>
+  <p *ngIf="!auth.isLoggedIn">You are not logged in.</p>
+</div>

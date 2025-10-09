@@ -1,53 +1,85 @@
 <div class="container py-4">
-
-  <section class="hero-section ">
+  <section class="hero-section">
     <h1 class="fw-bold">Welcome to our movie app</h1>
     <p class="text-muted mb-4">Millions of movies, TV shows and people to discover. Explore now.</p>
 
-    <div class="row ">
+    <div class="row">
       <div class="col-12">
         <div class="d-flex">
-          <input type="text" class="form-control form-control-lg me-2" placeholder="Search and explore..."
-            aria-label="Search" style="width: 100%;">
-          <button class="btn btn-lg fw-bold" type="button" style="  background-color: #f8d364;
-">Search</button>
+          <input
+            [(ngModel)]="searchQuery"
+            type="text"
+            class="form-control form-control-lg me-2"
+            placeholder="Search and explore..."
+            aria-label="Search"
+            style="width: 100%"
+          />
+          <button
+            class="btn btn-lg fw-bold"
+            type="button"
+            (click)="doSearch()"
+            style="background-color: #f8d364"
+          >
+            Search
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <hr>
+  <hr />
 
   <div class="container my-5">
     <h4 class="fw-bold mb-4">Now Playing</h4>
 
     <div class="row g-4">
-      @for (movie of movies$ | async; track movie.id) {
-      <div class="col-6 col-md-4 col-lg-2" style="height: 400px;">
-        <div class="movie-card shadow-sm rounded overflow-hidden position-relative">
+      <ng-container *ngIf="movies$ | async as movies">
+        <div
+          class="col-6 col-md-4 col-lg-2"
+          *ngFor="let movie of movies; trackBy: trackById"
+          style="height: 400px"
+        >
+          <div
+            class="movie-card shadow-sm rounded overflow-hidden position-relative"
+            [class.selected]="selectedId === movie.id"
+            (click)="select(movie)"
+          >
+            <a [routerLink]="['/movies', movie.id]">
+              <img
+                [src]="imageBaseUrl + movie.poster_path"
+                class="movie-image w-100"
+                [alt]="movie.title"
+              />
+            </a>
 
-          <img [src]="imageBaseUrl + movie.poster_path" class="movie-image w-100" [alt]="movie.title" />
-
-
-          <div class="rating-circle" [ngStyle]="{
-    background: getRatingColor(movie.vote_average)
-  }">
-            <span>{{ (movie.vote_average * 10) | number: '1.0-0' }}%</span>
-          </div>
-
-()
-          <i class="bi bi-heart-fill wishlist-icon" (click)="addtowishlist(movie)"></i>
-
-          <div class="movie-info">
-            <div>
-              <p class="movie-title">{{ movie.title }}</p>
-              <p class="movie-date">{{ movie.release_date | date: 'MMM dd, yyyy' }}</p>
+            <div
+              class="rating-circle"
+              [ngStyle]="{ background: getRatingColor(movie.vote_average) }"
+            >
+              <span>{{ movie.vote_average * 10 | number : '1.0-0' }}%</span>
             </div>
-            <i class="bi bi-star-fill text-warning"></i>
+
+            <button
+              class="btn btn-sm heart-btn"
+              [class.btn-success]="wishlistSet.has(movie.id)"
+              [class.selected-heart]="wishlistSet.has(movie.id)"
+              (click)="toggleHeart(movie, $event)"
+              [attr.aria-pressed]="wishlistSet.has(movie.id)"
+            >
+              <span *ngIf="!wishlistSet.has(movie.id)">🤍</span>
+              <span *ngIf="wishlistSet.has(movie.id)">❤️</span>
+            </button>
+
+            <div class="movie-info">
+              <div>
+                <p class="movie-title">{{ movie.title }}</p>
+                <p class="movie-date">{{ movie.release_date | date : 'MMM dd, yyyy' }}</p>
+              </div>
+              <i class="bi bi-star-fill text-warning"></i>
+            </div>
           </div>
         </div>
-      </div>
-      }
+      </ng-container>
     </div>
   </div>
 
@@ -67,7 +99,8 @@
       }
 
       <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <button class="page-link" (click)="goToPage(currentPage + 1)">›</button>
+        <button class="page-link" (click)="goToPage(currentPage + 1)"></button>
       </li>
     </ul>
   </nav>
+</div>

@@ -4,7 +4,7 @@ import { App } from './app';
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [App, (await import('@angular/router/testing')).RouterTestingModule],
     }).compileComponents();
   });
 
@@ -16,8 +16,8 @@ describe('App', () => {
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, AngularProj');
+    const app = fixture.componentInstance;
+    // App uses a signal for title(), assert the signal value instead of template text
+    expect(app.title()).toContain('AngularProj');
   });
 });

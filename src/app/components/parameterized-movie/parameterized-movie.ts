@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
 import { Imovie } from '../../models/imovie';
 import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from '../../shared/movies-service';
@@ -6,17 +7,22 @@ import { WishlistService } from '../../shared/wishlist-service';
 
 @Component({
   selector: 'app-parameterized-movie',
-  imports: [],
+  imports: [CommonModule, NgIf],
   templateUrl: './parameterized-movie.html',
-  styleUrl: './parameterized-movie.css'
+  styleUrls: ['./parameterized-movie.css'],
 })
 export class ParameterizedMovie {
- id: number | null = null;
+  id: number | null = null;
   movie: Imovie | null = null;
   loading: boolean = false;
   error: string = '';
+  added = false;
 
-  constructor(public activatedRoute: ActivatedRoute, private movieService: MoviesService,private wishlistService:WishlistService) {}
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    private movieService: MoviesService,
+    private wishlistService: WishlistService
+  ) {}
 
   ngOnInit(): void {
     this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -37,10 +43,8 @@ export class ParameterizedMovie {
       },
     });
   }
-  addToWishList(movie: Imovie, btnAdd: HTMLElement) {
+  addToWishList(movie: Imovie) {
     this.wishlistService.addToWishlist(movie);
-    btnAdd.style.textDecorationLine = 'line-through;';
-    btnAdd.style.backgroundColor = 'grey';
-    btnAdd.innerHTML += `✅`;
+    this.added = true;
   }
 }

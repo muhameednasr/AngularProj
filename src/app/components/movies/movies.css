@@ -16,6 +16,32 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
+.movie-card.selected {
+  background-color: #d4f7dc; /* light green background */
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.08);
+}
+
+.movie-card.selected .movie-title,
+.movie-card.selected .movie-date {
+  color: #0b6b22; /* dark green text for contrast */
+}
+
+.heart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.heart-btn.selected-heart {
+  background-color: #b7f0c8; /* green-ish */
+  border-radius: 6px;
+}
+
+.heart-btn.selected-heart span {
+  color: #0b6b22;
+}
+
 .movie-image {
   height: 270px;
   object-fit: cover;
@@ -62,7 +88,6 @@ body {
   margin: 0;
 }
 
-
 .pagination-custom .page-link {
   border: none;
   color: #000;
@@ -92,7 +117,6 @@ body {
   font-size: 0.9rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
 
 .rating-circle span {
   position: relative;

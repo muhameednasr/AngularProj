@@ -1,2 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
+
+/* Snackbar colors for NotificationService (MatSnackBar panelClass) */
+.snack-success {
+  background-color: #2e7d32 !important;
+  color: #fff !important;
+}
+.snack-error {
+  background-color: #d32f2f !important;
+  color: #fff !important;
+}
+.snack-info {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+}
