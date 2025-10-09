@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Imovie } from '../../models/imovie';
 import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from '../../shared/movies-service';
@@ -6,17 +7,22 @@ import { WishlistService } from '../../shared/wishlist-service';
 
 @Component({
   selector: 'app-parameterized-movie',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './parameterized-movie.html',
-  styleUrl: './parameterized-movie.css'
+  styleUrls: ['./parameterized-movie.css']
 })
 export class ParameterizedMovie {
- id: number | null = null;
+  id: number | null = null;
   movie: Imovie | null = null;
   loading: boolean = false;
   error: string = '';
 
-  constructor(public activatedRoute: ActivatedRoute, private movieService: MoviesService,private wishlistService:WishlistService) {}
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    private movieService: MoviesService,
+    private wishlistService: WishlistService
+  ) {}
 
   ngOnInit(): void {
     this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -27,20 +33,22 @@ export class ParameterizedMovie {
     this.loading = true;
 
     this.movieService.getMovie(Number(this.id)).subscribe({
-      next: (data) => {
+      next: (data: Imovie) => {
         this.movie = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.loading = false;
-        this.error = err;
+        this.error = 'Failed to load movie details.';
+        console.error(err);
       },
     });
   }
+
   addToWishList(movie: Imovie, btnAdd: HTMLElement) {
     this.wishlistService.addToWishlist(movie);
-    btnAdd.style.textDecorationLine = 'line-through;';
+    btnAdd.style.textDecoration = 'line-through';
     btnAdd.style.backgroundColor = 'grey';
-    btnAdd.innerHTML += `✅`;
+    btnAdd.innerHTML += ` ✅`;
   }
 }

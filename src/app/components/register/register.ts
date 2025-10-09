@@ -1,5 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { UserService } from '../../auth/user-service';
 import { Iuser } from '../../models/iuser';
 import { Router } from '@angular/router';
@@ -7,15 +13,16 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule,CommonModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule], // ✅ هنا التعديل الأساسي
   templateUrl: './register.html',
-  styleUrl: './register.css'
+  styleUrl: './register.css',
 })
 export class Register {
-user: Iuser[] = [];
-
+  user: Iuser[] = [];
   loginForm: FormGroup;
   router = inject(Router);
+
   constructor(private fb: FormBuilder, private userService: UserService) {
     this.loginForm = this.fb.group(
       {
@@ -48,38 +55,41 @@ user: Iuser[] = [];
   submitFormData() {
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
-      const user:Iuser={username: formData.username,
+      const user: Iuser = {
+        username: formData.username,
         email: formData.email,
-        password: formData.password,wishlist:[]}
-      this.userService.addUser( user);
+        password: formData.password,
+        wishlist: [],
+      };
+      this.userService.addUser(user);
+      alert(`${this.loginForm.get('name')?.value} added successfully`);
       this.router.navigate(['/']);
     }
-    alert(this.loginForm.get('name')?.value + ' added successfully');
-    console.log(this.loginForm.get('name')?.value + ' added successfully');
   }
 
   get nameCtrl(): FormControl {
-    return <FormControl>this.loginForm.get('name');
+    return this.loginForm.get('name') as FormControl;
   }
 
   get usernameCtrl(): FormControl {
-    return <FormControl>this.loginForm.get('username');
+    return this.loginForm.get('username') as FormControl;
   }
 
   get emailCtrl(): FormControl {
     return this.loginForm.get('email') as FormControl;
   }
+
   get passwordCtrl(): FormControl {
-    return <FormControl>this.loginForm.get('password');
+    return this.loginForm.get('password') as FormControl;
   }
+
   get confirmPasswordCtrl(): FormControl {
-    return <FormControl>this.loginForm.get('confirmPassword');
+    return this.loginForm.get('confirmPassword') as FormControl;
   }
 }
+
 function passwordMatchValidator(form: FormGroup) {
   const password = form.get('password')?.value;
   const confirmPassword = form.get('confirmPassword')?.value;
-
   return password === confirmPassword ? null : { passwordMismatch: true };
 }
-

@@ -1,49 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Imovie } from '../models/imovie';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { Imovie } from '../models/imovie';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class MoviesService {
   private apiKey = 'cdf737fb0a8771a79228a4d738740585';
-  private baseURL = `https://api.themoviedb.org/3/movie/now_playing`;
+  private baseURL = 'https://api.themoviedb.org/3';
 
   constructor(private http: HttpClient) {}
 
-  getMovies(page: number = 1): Observable<Imovie[]> {
+  getMovies(page: number = 1): Observable<{ results: Imovie[]; total_pages: number }> {
     return this.http
-      .get<{ results: Imovie[] }>(
-        `${this.baseURL}?api_key=${this.apiKey}&language=en-US&page=${page}`
+      .get<{ results: Imovie[]; total_pages: number }>(
+        `${this.baseURL}/movie/now_playing?api_key=${this.apiKey}&language=en-US&page=${page}`
       )
-      .pipe(map((res) => res.results));
+      .pipe(map(res => res));
+  }
+
+  searchMovies(query: string, page: number = 1): Observable<{ results: Imovie[]; total_pages: number }> {
+    return this.http
+      .get<{ results: Imovie[]; total_pages: number }>(
+        `${this.baseURL}/search/movie?api_key=${this.apiKey}&language=en-US&query=${query}&page=${page}`
+      )
+      .pipe(map(res => res));
   }
 
   getMovie(id: number): Observable<Imovie> {
-    return this.http.get<Imovie>(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${this.apiKey} `
-    );
-  }
-
-  //recommendations
-  getRecommendations(id: number): Observable<Imovie[]> {
     return this.http
-      .get<{ results: Imovie[] }>(
-        `${this.baseURL}/movie/${id}/recommendations?api_key=${this.apiKey}`
-      )
-      .pipe(map((res) => res.results));
+      .get<Imovie>(`${this.baseURL}/movie/${id}?api_key=${this.apiKey}&language=en-US`)
+      .pipe(map(res => res));
   }
-
-  // addMovie(movie: Imovie): Observable<Imovie> {
-  //   return this.http.post<Imovie>(this.baseURL, movie);
-  // }
-
-  // updateMovie(id: number, newMovie: Imovie): Observable<Imovie> {
-  //   return this.http.put<Imovie>(`${this.baseURL}/${id}`, newMovie);
-  // }
-
-  // deleteMovie(id: number): Observable<unknown> {
-  //   return this.http.delete(`${this.baseURL}/${id}`);
-  // }
 }

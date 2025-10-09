@@ -1,0 +1,93 @@
+.footer {
+  background-color: #121212;
+  color: #a0a0a0;
+  padding: 40px 20px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 150px;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.app-logo span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.app-logo i {
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.footer-info p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+h3 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  color: #a0a0a0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #fff;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  font-size: 20px;
+  color: #a0a0a0;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+}
+
+.footer-bottom hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin-bottom: 20px;
+}
+
+.footer-bottom p {
+  font-size: 14px;
+}
