@@ -1,5 +1,5 @@
 export interface Imovie {
-  adult: boolean;
+ adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
@@ -13,4 +13,5 @@ export interface Imovie {
   video: false;
   vote_average: number;
   vote_count: number;
+  
 }

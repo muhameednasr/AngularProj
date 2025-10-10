@@ -4,15 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from '../../shared/movies-service';
 import { WishlistService } from '../../shared/wishlist-service';
 import { NgIf, NgFor, CommonModule } from '@angular/common';
-import { MatIconModule } from "@angular/material/icon";
-import { RuntimePipe } from "../../Pipe/runtime-pipe";
+import { MatIconModule } from '@angular/material/icon';
+// import { RuntimePipe } from "../../Pipe/runtime-pipe";
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-parameterized-movie',
   standalone: true,
-  imports: [NgIf, NgFor, MatIconModule, RuntimePipe,MatButtonModule, CommonModule, MatSnackBarModule  ],
+  imports: [NgIf, NgFor, MatIconModule,MatButtonModule, CommonModule, MatSnackBarModule  ],
   templateUrl: './parameterized-movie.html',
   styleUrls: ['./parameterized-movie.css']
 })

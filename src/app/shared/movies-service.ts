@@ -20,6 +20,16 @@ export class MoviesService {
       .pipe(map(res => res));
   }
 
+  
+  //recommendations
+ getRecommendations(id: number): Observable<Imovie[]> {
+  return this.http
+    .get<{ results: Imovie[] }>(
+      `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${this.apiKey}&language=en-US`
+    )
+    .pipe(map((res) => res.results));
+}
+
   searchMovies(query: string, page: number = 1): Observable<{ results: Imovie[]; total_pages: number }> {
     return this.http
       .get<{ results: Imovie[]; total_pages: number }>(

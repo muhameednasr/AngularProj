@@ -1,158 +1,97 @@
-import { Component, OnInit } from '@angular/core';
-import { Imovie } from '../../models/imovie';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MoviesService } from '../../shared/movies-service';
-import { WishlistService } from '../../shared/wishlist-service';
-import { NgIf, NgFor, CommonModule } from '@angular/common';
-import { MatIconModule } from "@angular/material/icon";
-import { RuntimePipe } from "../../Pipe/runtime-pipe";
-import { MatButtonModule } from '@angular/material/button';
-import { Subscription } from 'rxjs';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-@Component({
-  selector: 'app-parameterized-movie',
-  standalone: true,
-  imports: [NgIf, NgFor, MatIconModule, RuntimePipe,MatButtonModule, CommonModule, MatSnackBarModule  ],
-  templateUrl: './parameterized-movie.html',
-  styleUrls: ['./parameterized-movie.css']
-})
-export class ParameterizedMovie implements OnInit {
+<div class="details-container container my-4" *ngIf="!loading && movie; else loadingOrError">
+    <div class="row g-4 align-items-start">
 
-  id: number | null = null;
-  movie: Imovie | null = null;
-  loading = false;
-  error = '';
-  recs: Imovie[] = [];
-  private sub = new Subscription();
-  userRating = 0;
-  stars = Array(5).fill(0);
+        <!-- 🎬 Poster -->
+        <div class="col-md-4 text-center">
+            <img class="img-fluid rounded shadow"
+                [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'assets/no-poster.png'"
+                [alt]="movie.title">
+        </div>
 
-  inWishlist = false;
+        <!-- 🧾 Details -->
+        <div class="col-md-8">
+            <div class="right">
+                <h1>{{ movie.title }}</h1>
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private movieService: MoviesService,
-    private wishlistService: WishlistService,
-    private router: Router,
-      private snackBar: MatSnackBar, 
+                <!-- 📅 Date & ⭐ Rating -->
+                <p class="meta text-muted">
+                    {{ movie.release_date | date:'mediumDate' }}
+                    • ⭐ {{ movie.vote_average }} ({{ movie.vote_count }})
+                </p>
 
-  ) {}
+                <!-- ❤️ Wishlist + Actions -->
+                <div class="d-flex gap-3 my-2">
+                    <button mat-icon-button color="warn" (click)="aaddToWishList(movie)">
+                        <mat-icon *ngIf="inWishlist; else notAdded">favorite</mat-icon>
+                        <ng-template #notAdded>
+                            <mat-icon>favorite_border</mat-icon>
+                        </ng-template>
+                    </button>
 
- ngOnInit(): void {
-  this.snackBar.open('Snackbar test message', 'Close', {
-    duration: 3000,
-    verticalPosition: 'top',
-    horizontalPosition: 'center'
-  });
-  // 🟢 أول مرة الصفحة تفتح
-  this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-  this.loadMovie(this.id);
+                    <button mat-icon-button><mat-icon>share</mat-icon></button>
+                    <button mat-icon-button><mat-icon>play_arrow</mat-icon></button>
+                    <button mat-icon-button><mat-icon>bookmark</mat-icon></button>
+                </div>
 
-  // 🟢 لما يتغير الـ id بعد كده (بدون reload)
-  this.activatedRoute.paramMap.subscribe(params => {
-    const newId = Number(params.get('id'));
-    if (newId && newId !== this.id) {
-      this.id = newId;
-      this.loadMovie(newId);
-    }
-  });
-}
+                <!-- 🧠 Overview -->
+                <p class="overview">{{ movie.overview }}</p>
 
-private loadMovie(id: number): void {
-  this.movieService.getMovie(id).subscribe({
-    next: (data) => {
-      this.movie = data;
+                <!-- 🎭 Genres -->
+                <div class="chips mb-2 div2">
+                    <span class="chip badge bg-secondary me-1 span1" *ngFor="let g of movie.genre_ids">
+                        Genre ID: {{ g }}
+                    </span>
+                </div>
 
-      // save user rating if exists
-      const savedRating = localStorage.getItem(`rating_${id}`);
-      if (savedRating) this.userRating = +savedRating;
+                <!-- 🌐 Original Language -->
+                <p>Language: {{ movie.original_language | uppercase }}</p>
 
-      // update wishlist status
-      const wishlist = this.wishlistService['_wishlist$'].value;
-      this.inWishlist = wishlist.some(m => m.id === id);
-      
-       this.movieService.getRecommendations(id).subscribe({
-        next: (recs) => {
-          console.log('✅ Recommendations:', recs);
-          this.recs = recs;
-        },
-        error: (err) => {
-          console.error(' Error loading recommendations:', err);
-        }
-      });
-    },
-    
-    error: (err) => {
-      console.error(' Error loading movie:', err);
-      this.error = 'Failed to load movie details.';
-    }
-  });
-}
+                <!-- 📅 Original Title -->
+                <p *ngIf="movie.original_title !== movie.title">
+                    Original Title: {{ movie.original_title }}
+                </p>
 
-  fetchMovie() {
-    if (!this.id) return;
-    this.loading = true;
+                <!-- 🔢 Popularity -->
+                <p>Popularity Score: {{ movie.popularity }}</p>
 
-    this.movieService.getMovie(this.id).subscribe({
-      next: (data) => {
-        this.movie = data;
-        this.loading = false;
+                <!-- ⭐ Rating -->
+                <div class="rating mt-3">
+                    <span *ngFor="let star of stars; let i = index" (click)="rate(i + 1)"
+                        [class.filled]="i < userRating">
+                        ★
+                    </span>
+                </div>
+                <p *ngIf="userRating" class="p1">Your rating: {{ userRating }} / 5</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-        const wishlist = this.wishlistService['_wishlist$'].value;
-        this.inWishlist = wishlist.some(m => m.id === this.movie?.id);
-      },
-      error: (err) => {
-        this.loading = false;
-        this.error = err.message || 'Failed to load movie.';
-      }
-    });
-  }
+<!-- 🔄 Loading & Error -->
+<ng-template #loadingOrError>
+    <div class="text-center my-5">
+        <p *ngIf="loading">Loading movie...</p>
+        <p *ngIf="!loading && error">{{ error }}</p>
+    </div>
+</ng-template>
 
+<br>
 
-getPosterUrl(path?: string) {
-    return path
-      ? `https://image.tmdb.org/t/p/w500${path}`
-      : 'assets/no-poster.png';
-  }
-  navigateTo(id: number) {
-    this.router.navigate(['/movie', id]);
-  }
-  // rating
-  rate(value: number) {
-    this.userRating = value;
-    if (this.movie) {
-      localStorage.setItem(`rating_${this.movie.id}`, value.toString());
-    }
-  }
-  
- aaddToWishList(movie: Imovie) {
-  if (!movie) return;
+<!-- 🎥 Recommendations -->
+<section class="recommendations container my-4 sec2" *ngIf="recs.length">
+    <h2>Recommendations</h2>
+    <div class="row">
+        <div class="col-md-2 mb-3" *ngFor="let r of recs" (click)="navigateTo(r.id)">
+            <div class="card h-100 shadow-sm">
+                <img class="card-img-top" [src]="getPosterUrl(r.poster_path || '')" [alt]="r.title">
+                <div class="card-body text-center">
+                    <div class="card-title">{{ r.title }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-  const currentList = this.wishlistService['_wishlist$'].value;
-  const exists = currentList.some(m => m.id === movie.id);
-
-  if (exists) {
-    this.wishlistService.removeFromWishlist(movie.id);
-    this.inWishlist = false;
-
-    this.snackBar.open(' Removed from wishlist', 'Close', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['snack-error']
-    });
-  } else {
-    this.wishlistService.addToWishlist(movie);
-    this.inWishlist = true;
-    this.snackBar.open('Added to wishlist', 'Close', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: ['snack-success']
-    });
-  }
-}
-
-
-
-}
+<p *ngIf="!recs.length" class="text-muted text-center mt-3">
+    No recommendations found.
+</p>
