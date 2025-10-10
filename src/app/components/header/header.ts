@@ -17,8 +17,7 @@ export class Header {
   total$!: Observable<number>;
   isLoggedIn$!: Observable<boolean>;
   currentLang: string = 'EN';
-
-  
+  isDark: boolean = false;
 
   constructor(
     private wishlist: WishlistService,
@@ -26,8 +25,6 @@ export class Header {
     private router: Router,
     private languageService: LanguageService
   ) {}
-
-  
 
   ngOnInit(): void {
     this.total$ = this.wishlist.total$;
@@ -39,6 +36,19 @@ export class Header {
     } catch (e) {
       // ignore if document-less environment
     }
+
+    // Initialize dark mode from localStorage and apply to document body
+    try {
+      const stored = localStorage.getItem('darkMode');
+      this.isDark = stored === 'true';
+      if (this.isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    } catch (e) {
+      // ignore (e.g., SSR or restricted environment)
+    }
   }
 
   logout() {
@@ -49,5 +59,20 @@ export class Header {
   setLanguage(code: LangCode) {
     this.languageService.setLanguage(code);
     this.currentLang = code.toUpperCase();
+  }
+
+  toggleDarkMode() {
+    try {
+      this.isDark = !this.isDark;
+      if (this.isDark) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'false');
+      }
+    } catch (e) {
+      // ignore localStorage/document errors
+    }
   }
 }

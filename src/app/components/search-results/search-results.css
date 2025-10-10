@@ -1,1 +1,39 @@
-.movie-card img{width:100%;height:220px;object-fit:cover}
+.movie-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.no-results {
+  width: 100%;
+  text-align: center;
+  padding: 40px 10px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #333;
+  animation: fadeIn 260ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect dark mode */
+body.dark-mode .no-results {
+  color: #e6e6e6;
+}
+
+/* Ensure message respects RTL by centering content regardless of direction */
+.no-results {
+  direction: inherit;
+}

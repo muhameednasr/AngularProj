@@ -6,7 +6,8 @@ import { MoviesService } from '../../shared/movies-service';
 import { WishlistService } from '../../shared/wishlist-service';
 import { Imovie } from '../../models/imovie';
 import { LanguageService } from '../../shared/language-service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, combineLatest, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movies',
@@ -21,10 +22,11 @@ export class Movies {
   currentPage = 1;
   searchQuery = '';
   loading = false;
+  private search$ = new Subject<string>();
   pagesToShow: number[] = [];
   favorites: number[] = [];
-
   private _langSub?: Subscription;
+  private _searchSub?: Subscription;
 
   constructor(
     private movieService: MoviesService,
@@ -35,10 +37,12 @@ export class Movies {
   ngOnInit(): void {
     this.fetchMovies();
     this.startLanguageListener();
+    this.startSearchListener();
   }
 
   ngOnDestroy(): void {
     this._langSub?.unsubscribe();
+    this._searchSub?.unsubscribe();
   }
 
   fetchMovies(): void {
@@ -47,11 +51,15 @@ export class Movies {
     try {
       // read the current language for debugging
       const currentLang = this.languageService.getLanguage();
-      console.log(`[Movies] fetchMovies() - page=${this.currentPage} language=${currentLang} searchQuery='${this.searchQuery}'`);
+      console.log(
+        `[Movies] fetchMovies() - page=${this.currentPage} language=${currentLang} searchQuery='${this.searchQuery}'`
+      );
     } catch (e) {
       // ignore in non-browser env
     }
-    const obs = this.searchQuery ? this.movieService.searchMovies(this.searchQuery, this.currentPage) : this.movieService.getMovies(this.currentPage);
+    const obs = this.searchQuery
+      ? this.movieService.searchMovies(this.searchQuery, this.currentPage)
+      : this.movieService.getMovies(this.currentPage);
     obs.subscribe({
       next: (res: any) => {
         this.movies = res.results || [];
@@ -72,6 +80,33 @@ export class Movies {
     });
   }
 
+  // Start search listener that debounces input and also reacts to language changes
+  startSearchListener(): void {
+    // Combine the debounced search term stream with language changes so language toggles re-run the current search
+    const debounced = this.search$.pipe(debounceTime(300), distinctUntilChanged());
+
+    this._searchSub = combineLatest([debounced, this.languageService.currentLanguage$])
+      .pipe(
+        // when either search term or language changes, run the search logic
+        switchMap(([term]) => {
+          this.loading = true;
+          this.currentPage = 1;
+          this.searchQuery = term;
+          const obs =
+            term && term.trim() !== ''
+              ? this.movieService.searchMovies(term, this.currentPage)
+              : this.movieService.getMovies(this.currentPage);
+          return obs.pipe(catchError(() => of({ results: [], total_pages: 1 })));
+        })
+      )
+      .subscribe((res: any) => {
+        this.movies = res.results || [];
+        this.totalPages = Math.min(res.total_pages || 1, 19);
+        this.updatePagination();
+        this.loading = false;
+      });
+  }
+
   updatePagination(): void {
     const start = Math.max(1, this.currentPage - 2);
     const end = Math.min(start + 4, this.totalPages);
@@ -79,8 +114,13 @@ export class Movies {
   }
 
   onSearch(): void {
-    this.currentPage = 1;
-    this.fetchMovies();
+    // push current value into the search stream (immediate trigger)
+    this.search$.next(this.searchQuery || '');
+  }
+
+  // called from template on every input event
+  onSearchInput(value: string): void {
+    this.search$.next(value || '');
   }
 
   goToPage(page: number): void {
@@ -106,8 +146,9 @@ export class Movies {
   // wishlist helpers
   isInWishlist(movie: Imovie): boolean {
     try {
-      return this.wishlistService && this.wishlistService['getWishlist'] ?
-        (this.wishlistService as any)._wishlist$.value.some((m: Imovie) => m.id === movie.id) : false;
+      return this.wishlistService && this.wishlistService['getWishlist']
+        ? (this.wishlistService as any)._wishlist$.value.some((m: Imovie) => m.id === movie.id)
+        : false;
     } catch (e) {
       return false;
     }

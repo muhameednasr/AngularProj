@@ -11,20 +11,31 @@ import { Observable, switchMap, map } from 'rxjs';
   selector: 'app-search-results',
   imports: [CommonModule, NgForOf, NgIf, RouterLink],
   templateUrl: './search-results.html',
-  styleUrl: './search-results.css',
+  styleUrls: ['./search-results.css'],
 })
 export class SearchResults {
   query: string = '';
   movies$!: Observable<Imovie[]>;
   imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-  constructor(private route: ActivatedRoute, private moviesService: MoviesService, private languageService: LanguageService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private moviesService: MoviesService,
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
-    this.movies$ = combineLatest([this.route.queryParamMap, this.languageService.currentLanguage$]).pipe(
+    this.movies$ = combineLatest([
+      this.route.queryParamMap,
+      this.languageService.currentLanguage$,
+    ]).pipe(
       switchMap(([params]) => {
         this.query = params.get('q') || '';
-        return this.moviesService.searchMovies(this.query).pipe(map((res) => res.results));
+        // if query is empty, return the default movies list
+        if (!this.query || this.query.trim() === '') {
+          return this.moviesService.getMovies(1).pipe(map((res) => res.results));
+        }
+        return this.moviesService.searchMovies(this.query).pipe(map((res) => res.results || []));
       })
     );
   }

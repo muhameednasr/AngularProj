@@ -1,8 +1,14 @@
 <div class="movies-container">
   <!-- Search -->
   <div class="search-box">
-    <input type="text" [(ngModel)]="searchQuery" placeholder="Search movies..." />
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="onSearchInput($any($event.target).value)"
+      placeholder="Search movies..."
+    />
     <button (click)="onSearch()">Search</button>
+    <span *ngIf="loading" class="spinner-inline" aria-hidden="true">⏳</span>
   </div>
 
   <!-- Movies grid -->

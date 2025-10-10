@@ -50,4 +50,3 @@ export class Register {
     setTimeout(() => this.router.navigateByUrl('/login'), 1000);
   }
 }
-

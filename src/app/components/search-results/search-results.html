@@ -3,15 +3,26 @@
 
   <div class="row g-4 mt-3">
     <ng-container *ngIf="movies$ | async as movies">
-      <div *ngIf="movies.length === 0">No results found.</div>
-      <div class="col-6 col-md-4 col-lg-2" *ngFor="let movie of movies">
-        <div class="movie-card">
-          <a [routerLink]="['/movies', movie.id]">
-            <img [src]="imageBaseUrl + movie.poster_path" class="img-fluid" [alt]="movie.title" />
-          </a>
-          <div class="mt-2">{{ movie.title }}</div>
+      <!-- ✅ لو في نتايج -->
+      <ng-container *ngIf="movies.length > 0; else noResults">
+        <div class="col-6 col-md-4 col-lg-2" *ngFor="let movie of movies">
+          <div class="movie-card">
+            <a [routerLink]="['/movies', movie.id]">
+              <img
+                [src]="imageBaseUrl + movie.poster_path"
+                class="img-fluid"
+                [alt]="movie.title"
+              />
+            </a>
+            <div class="mt-2">{{ movie.title }}</div>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </ng-container>
+
+    <!-- ✅ رسالة لما مفيش أفلام -->
+    <ng-template #noResults>
+      <div class="no-results">Not Found 😕</div>
+    </ng-template>
   </div>
 </div>

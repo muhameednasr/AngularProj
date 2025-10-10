@@ -8,10 +8,9 @@ export type LangCode = 'en' | 'ar' | 'fr' | 'zh';
 export class LanguageService {
   private _lang$ = new BehaviorSubject<LangCode>('en');
   readonly currentLanguage$ = this._lang$.asObservable();
-  
+
   constructor(private notifier: NotificationService) {}
 
-  
   getLanguage(): LangCode {
     return this._lang$.value;
   }

@@ -36,6 +36,18 @@
       </ul>
     </div>
 
+    <!-- Dark mode toggle -->
+    <button
+      class="btn btn-sm btn-light dark-toggle"
+      type="button"
+      (click)="toggleDarkMode()"
+      [title]="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+      aria-pressed="{{ isDark }}"
+      aria-label="Toggle dark mode"
+    >
+      {{ isDark ? '☀️' : '🌙' }}
+    </button>
+
     <a
       [routerLink]="['/wishlist']"
       class="wishlist-link d-flex align-items-center text-decoration-none"

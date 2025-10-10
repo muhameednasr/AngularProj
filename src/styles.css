@@ -14,3 +14,111 @@
   background-color: #1976d2 !important;
   color: #fff !important;
 }
+
+/* Dark mode globals */
+body.dark-mode {
+  background-color: #121212;
+  color: #e6e6e6;
+}
+
+body.dark-mode .navbar-custom {
+  background-color: #1f1f1f;
+}
+
+body.dark-mode .movie-card {
+  background-color: #1b1b1b;
+  color: #e6e6e6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Ensure header layout stays unchanged; only colors change */
+.navbar-custom,
+.navbar-custom * {
+  direction: ltr !important;
+}
+.navbar-custom {
+  transition: background-color 220ms ease;
+}
+
+/* Links/buttons in dark mode */
+body.dark-mode a,
+body.dark-mode .movie-info h3 {
+  color: #e6e6e6;
+}
+body.dark-mode .dropdown-menu {
+  background-color: #2a2a2a;
+  color: #e6e6e6;
+}
+body.dark-mode .dropdown-item {
+  color: #e6e6e6;
+}
+body.dark-mode .btn {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Enhanced snackbar visibility (Material) */
+/* Target both MDC and legacy snack container class names */
+.mat-mdc-snack-bar-container,
+.mat-snack-bar-container {
+  max-width: 680px !important;
+  margin: 0 auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* Ensure the message text inside simple snackbars scales and wraps nicely */
+.mat-mdc-snack-bar-container .mat-simple-snackbar,
+.mat-snack-bar-container .mat-simple-snackbar {
+  line-height: 1.2 !important;
+  white-space: normal !important;
+}
+
+/* Make the theme classes used by NotificationService explicit and high-contrast */
+.mat-mdc-theme-primary,
+.snack-success {
+  background-color: #4e4848 !important;
+  color: #fff !important;
+}
+.mat-mdc-theme-warn,
+.snack-error {
+  background-color: #d32f2f !important;
+  color: #fff !important;
+}
+.mat-mdc-theme-accent,
+.snack-info {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+}
+
+/* Slightly different treatment in dark mode (reduce brightness, keep contrast) */
+body.dark-mode .mat-mdc-snack-bar-container,
+body.dark-mode .mat-snack-bar-container {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Add a subtle entrance animation for better visibility */
+.mat-mdc-snack-bar-container,
+.mat-snack-bar-container {
+  transform-origin: center bottom;
+  animation: snackIn 260ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+@keyframes snackIn {
+  from {
+    transform: translateY(8px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}

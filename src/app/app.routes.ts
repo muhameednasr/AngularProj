@@ -11,15 +11,24 @@ export const routes: Routes = [
   { path: 'register', component: Register, title: 'register' },
   {
     path: 'search',
-    loadComponent: () => import('./components/search-results/search-results').then((m) => m.SearchResults),
+    loadComponent: () =>
+      import('./components/search-results/search-results').then((m) => m.SearchResults),
     title: 'search',
   },
   {
     path: 'movies/:id',
-    loadComponent: () => import('./components/parameterized-movie/parameterized-movie').then((m) => m.ParameterizedMovie),
+    loadComponent: () =>
+      import('./components/parameterized-movie/parameterized-movie').then(
+        (m) => m.ParameterizedMovie
+      ),
     title: 'movie',
   },
   { path: 'wishlist', component: Watchlist, title: 'wishlist', canActivate: [authGuardGuard] },
-  { path: 'account', loadComponent: () => import('./components/account/account').then((m) => m.Account), canActivate: [authGuardGuard], title: 'account' },
+  {
+    path: 'account',
+    loadComponent: () => import('./components/account/account').then((m) => m.Account),
+    canActivate: [authGuardGuard],
+    title: 'account',
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

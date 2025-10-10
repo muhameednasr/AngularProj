@@ -8,7 +8,9 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.search-box { margin-bottom: 30px; }
+.search-box {
+  margin-bottom: 30px;
+}
 .search-box input {
   width: 280px;
   padding: 10px;
@@ -22,7 +24,7 @@
 }
 .search-box button {
   margin-left: 8px;
-  background-color: #FFD700;
+  background-color: #ffd700;
   color: #000;
   border: none;
   padding: 10px 15px;
@@ -31,52 +33,169 @@
   font-weight: bold;
   transition: 0.3s;
 }
-.search-box button:hover { background-color: #000; color: #FFD700; }
+.search-box button:hover {
+  background-color: #000;
+  color: #ffd700;
+}
 
-.movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; justify-items: center; }
+.spinner-inline {
+  margin-left: 8px;
+  font-size: 16px;
+}
 
-.movie-card { background-color: #fff; border-radius: 12px; overflow: hidden; transition: 0.3s ease; position: relative; width: 220px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.movie-card:hover { transform: translateY(-6px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-.movie-card.selected { background-color: #d4f7dc; box-shadow: 0 10px 20px rgba(0,128,0,0.08); }
-.movie-card.selected .movie-title, .movie-card.selected .movie-date { color: #0b6b22; }
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
 
-.image-container { position: relative; }
-.image-container img { width: 100%; display: block; border-radius: 12px 12px 0 0; height: 270px; object-fit: cover; }
+.movie-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s ease;
+  position: relative;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.movie-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.movie-card.selected {
+  background-color: #d4f7dc;
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.08);
+}
+.movie-card.selected .movie-title,
+.movie-card.selected .movie-date {
+  color: #0b6b22;
+}
 
-.fav-btn { position: absolute; bottom: 10px; right: 10px; background-color: rgba(255,255,255,0.95); border: none; border-radius: 50%; padding: 8px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 18px; }
-.fav-btn:hover { background-color: #FFD700; }
-.fav-btn.active i { color: red; animation: pop 0.3s ease; }
-@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.image-container {
+  position: relative;
+}
+.image-container img {
+  width: 100%;
+  display: block;
+  border-radius: 12px 12px 0 0;
+  height: 270px;
+  object-fit: cover;
+}
 
-.movie-info { padding: 12px; text-align: left; }
-.movie-info h3 { font-size: 15px; font-weight: 600; color: #000; margin: 5px 0; }
-.movie-info .rating { color: #FFD700; font-weight: bold; }
+.fav-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+}
+.fav-btn:hover {
+  background-color: #ffd700;
+}
+.fav-btn.active i {
+  color: red;
+  animation: pop 0.3s ease;
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
-.pagination { margin-top: 40px; display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; }
-.pagination button { background-color: transparent; color: #000; border: 1px solid #FFD700; padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: 0.3s; font-weight: bold; }
-.pagination button:hover, .pagination button.active { background-color: #FFD700; color: #000; }
-.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+.movie-info {
+  padding: 12px;
+  text-align: left;
+}
+.movie-info h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  margin: 5px 0;
+}
+.movie-info .rating {
+  color: #ffd700;
+  font-weight: bold;
+}
 
-.rating-circle { position: absolute; top: 8px; left: 8px; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: conic-gradient(#21d07a 0deg, #204529 0deg); }
-.rating-circle span { position: relative; z-index: 2; font-weight: 700; color: #fff; }
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pagination button {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #ffd700;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+.pagination button:hover,
+.pagination button.active {
+  background-color: #ffd700;
+  color: #000;
+}
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
-.loading { padding: 40px; font-size: 18px; }
+.rating-circle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(#21d07a 0deg, #204529 0deg);
+}
+.rating-circle span {
+  position: relative;
+  z-index: 2;
+  font-weight: 700;
+  color: #fff;
+}
+
+.loading {
+  padding: 40px;
+  font-size: 18px;
+}
 
 /* position wishlist heart on top-left of image */
-.image-container { position: relative; }
+.image-container {
+  position: relative;
+}
 .image-heart {
   position: absolute;
   top: 8px;
   right: 8px;
   z-index: 20;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 50%;
   padding: 6px 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-
-*** End Patch
 
 /* End of movies.css */
