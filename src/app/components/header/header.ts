@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 import { WishlistService } from '../../shared/wishlist-service';
 import { AuthService } from '../../auth/auth-service';
 import { LanguageService, LangCode } from '../../shared/language-service';
-
+import { RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrls: ['./header.css'],
 })

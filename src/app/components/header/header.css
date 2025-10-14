@@ -31,8 +31,8 @@
 }
 
 .highlight {
-  background-color: rgb(2, 196, 15);
-  border: 1px rgb(4, 76, 4) solid;
+  background-color: rgb(196, 183, 2);
+  border: 1px rgb(186, 147, 18) solid;
   border-radius: 5px;
   transition: all 0.3s linear;
   animation: up 3s linear infinite;
@@ -57,15 +57,15 @@
 @keyframes up {
   0% {
     transform: translateY(-2px);
-    background-color: rgb(2, 196, 15);
+    background-color: rgb(196, 183, 2);
   }
   50% {
     transform: translateY(2px);
-    background-color: rgb(184, 234, 187);
+    background-color:  rgb(239, 234, 175);
   }
 
   100% {
     transform: translateY(-2px);
-    background-color: rgb(2, 196, 15);
+    background-color: rgb(196, 183, 2);
   }
 }

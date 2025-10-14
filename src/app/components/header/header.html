@@ -13,7 +13,8 @@
       height="50"
       onerror="this.style.display='none'"
     />
-    <span class="brand-title">Movie App</span>
+    <span class="brand-title" routerLinkActive="highlight" [routerLinkActiveOptions]="{exact:true}"
+>Movie App</span>
   </a>
 
   <div class="d-flex align-items-center gap-3 ms-auto">
@@ -50,7 +51,8 @@
 
     <a
       [routerLink]="['/wishlist']"
-      class="wishlist-link d-flex align-items-center text-decoration-none"
+      class="wishlist-link d-flex align-items-center text-decoration-none" routerLinkActive="highlight" [routerLinkActiveOptions]="{exact:true}"
+
     >
       <i class="bi bi-heart-fill me-2 text-white"></i>
       <span class="text-dark fw-bold">Wishlist</span>
@@ -62,6 +64,9 @@
         *ngIf="!(isLoggedIn$ | async)"
         class="btn btn-sm btn-outline-primary me-2"
         [routerLink]="['/login']"
+        routerLinkActive="highlight"
+        [routerLinkActiveOptions]="{exact:true}"
+
       >
         Login
       </button>
@@ -69,6 +74,9 @@
         *ngIf="!(isLoggedIn$ | async)"
         [routerLink]="['/register']"
         class="btn btn-sm btn-outline-success me-2"
+        routerLinkActive="highlight"
+        [routerLinkActiveOptions]="{exact:true}"
+
       >
         Register
       </a>
